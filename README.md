@@ -1,6 +1,6 @@
-# Site Tecceramica
+# Site Tecceramic
 
-Landing page comercial do laboratório de prótese odontológica **Tecceramica**, voltada para
+Landing page comercial do laboratório de prótese odontológica **Tecceramic**, voltada para
 dentistas, clínicas e profissionais da área. Construída em **HTML5 + CSS3 + JavaScript puro
 (Vanilla)** — sem frameworks, sem build, sem dependências externas além das fontes do Google Fonts.
 
@@ -22,7 +22,7 @@ python -m http.server 8000
 ## Estrutura de pastas
 
 ```
-tecceramica/
+tecceramic/
 ├── index.html              → página principal (todo o conteúdo do site)
 ├── privacy-policy.html     → página de política de privacidade (rascunho, revisar)
 ├── css/
@@ -80,7 +80,7 @@ estático e não é gerado a partir do `config.js`.
 
 ### Mapa
 
-O mapa usa o endereço completo da Tecceramica (`address.street` preenchido) automaticamente. Se
+O mapa usa o endereço completo da Tecceramic (`address.street` preenchido) automaticamente. Se
 `address.street` for esvaziado por algum motivo, o mapa volta a usar `mapQuery` (hoje configurado
 como "Araruama, RJ, Brasil", só a cidade) como alternativa.
 
@@ -141,12 +141,12 @@ Na seção `<!-- ===================== SERVIÇOS ===================== -->` do `
 serviço é um bloco `<article class="service-card">`. A lista atual foi montada a partir dos tipos
 de trabalho comprovados nas fotos reais recebidas (coroas em E-max, cerômero, dissilicato de
 lítio, protocolo sobre implante, provisório CAD/CAM e prótese total). Revise títulos e descrições
-para confirmar se refletem exatamente os serviços que a Tecceramica quer divulgar, e ajuste a
+para confirmar se refletem exatamente os serviços que a Tecceramic quer divulgar, e ajuste a
 `data-whatsapp-message` de cada botão se quiser uma mensagem diferente por serviço.
 
 ## 7. Onde trocar imagens
 
-- **Logo:** troque o arquivo `images/logo/logo-tecceramica.jpg` por um novo com o mesmo nome (ou
+- **Logo:** troque o arquivo `images/logo/logo-tecceramic.jpg` por um novo com o mesmo nome (ou
   atualize os caminhos `src="images/logo/..."` em `index.html` se usar outro nome de arquivo).
 - **Foto do Hero (banner principal):** é a imagem em `.hero__media-frame img`, dentro da seção
   `<section class="hero" id="inicio">`.
@@ -193,7 +193,7 @@ obrigatórios). Como o site ainda não tem um backend:
 ## 11. SEO — o que ainda precisa ser confirmado
 
 - O domínio usado nas tags `canonical`, Open Graph e no `sitemap.xml` é um placeholder
-  (`https://www.tecceramica.com.br/`), pois ainda não foi confirmado um domínio oficial. Assim que
+  (`https://www.tecceramic.com.br/`), pois ainda não foi confirmado um domínio oficial. Assim que
   ele for definido, atualize todas as ocorrências em `index.html`, `privacy-policy.html`,
   `sitemap.xml` e `robots.txt`.
 - O bloco de dados estruturados (JSON-LD, no `<head>` do `index.html`) já está preenchido com
@@ -216,7 +216,7 @@ mas o ideal é preenchê-los assim que possível:
 
 A única dependência externa é o **Google Fonts** (famílias Montserrat e Inter, carregadas via
 `<link>` no `<head>` de cada página), usada porque é a tipografia oficial do manual de marca da
-Tecceramica. Caso fique indisponível, o navegador usa automaticamente a fonte de sistema definida
+Tecceramic. Caso fique indisponível, o navegador usa automaticamente a fonte de sistema definida
 como alternativa (`--font-heading` e `--font-body` em `css/style.css` já incluem *fallbacks*), e o
 site continua funcionando normalmente, só com uma tipografia levemente diferente.
 

@@ -1,5 +1,5 @@
 /* =========================================================================
-   TECCERAMICA — LANDING PAGE
+   TECCERAMIC — LANDING PAGE
    Folha de estilos única (HTML5 + CSS3 + JS Vanilla, sem frameworks).
    Organizada por blocos comentados para facilitar manutenção futura.
    Sumário:
@@ -24,7 +24,7 @@
    ========================================================================= */
 
 /* -------------------------------------------------------------------------
-   1. VARIÁVEIS — baseadas no manual de marca da Tecceramica
+   1. VARIÁVEIS — baseadas no manual de marca da Tecceramic
    ------------------------------------------------------------------------- */
 :root {
   /* Cores oficiais da marca */
@@ -251,7 +251,7 @@ select:focus-visible {
   transition: transform var(--transition-fast), box-shadow var(--transition-fast),
     background-color var(--transition-fast), color var(--transition-fast);
   /* Sem white-space:nowrap de propósito: em telas muito estreitas, um
-     texto de botão longo (ex.: "Falar com a Tecceramica") não pode ser
+     texto de botão longo (ex.: "Falar com a Tecceramic") não pode ser
      impedido de quebrar linha, senão o botão força overflow horizontal
      na página inteira. max-width garante que nunca ultrapasse o pai. */
   max-width: 100%;

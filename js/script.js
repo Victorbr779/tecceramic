@@ -1,5 +1,5 @@
 /**
- * script.js — TECCERAMICA
+ * script.js — TECCERAMIC
  * -----------------------------------------------------------------------
  * JavaScript Vanilla puro, sem bibliotecas externas. Organizado em
  * pequenas funções, uma por responsabilidade, todas chamadas a partir
@@ -491,7 +491,7 @@
         // Sem backend ainda: encaminha os dados preenchidos para o WhatsApp,
         // em vez de simular um envio que não existe de verdade.
         var whatsappText =
-          "Olá! Vim pelo site da Tecceramica.\n" +
+          "Olá! Vim pelo site da Tecceramic.\n" +
           "Nome: " + data.nome + "\n" +
           (data.clinica ? "Clínica: " + data.clinica + "\n" : "") +
           (data.cidade ? "Cidade: " + data.cidade + "\n" : "") +

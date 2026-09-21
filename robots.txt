@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.tecceramica.com.br/sitemap.xml
+Sitemap: https://www.tecceramic.com.br/sitemap.xml

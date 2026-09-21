@@ -1,5 +1,5 @@
 /**
- * config.js — TECCERAMICA
+ * config.js — TECCERAMIC
  * -----------------------------------------------------------------------
  * TODOS os dados que costumam mudar (WhatsApp, telefone, e-mail, endereço,
  * horários e a mensagem padrão do WhatsApp) ficam centralizados aqui.
@@ -9,7 +9,7 @@
  * e botão flutuante).
  *
  * Campos marcados com "PREENCHER" ainda não foram fornecidos pela
- * Tecceramica. Enquanto não forem preenchidos, o site mostra um texto
+ * Tecceramic. Enquanto não forem preenchidos, o site mostra um texto
  * de aviso no lugar (ver script.js) em vez de inventar uma informação.
  *
  * Veja o README.md para instruções passo a passo de como editar cada campo.
@@ -18,7 +18,7 @@
 
 const siteConfig = {
   // Identidade
-  brandName: "Tecceramica",
+  brandName: "Tecceramic",
   brandTagline: "Prótese Dentária",
   brandSlogan: "Tecnologia · Precisão · Confiança",
 
@@ -30,7 +30,7 @@ const siteConfig = {
 
   // Mensagem inicial que abre pré-preenchida no WhatsApp.
   whatsappMessage:
-    "Olá! Conheci a Tecceramica pelo site e gostaria de saber mais sobre os serviços do laboratório.",
+    "Olá! Conheci a Tecceramic pelo site e gostaria de saber mais sobre os serviços do laboratório.",
 
   // Telefone fixo (opcional). Formato de exibição livre.
   phoneDisplay: "(22) 99775-4919",
