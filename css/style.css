@@ -71,6 +71,10 @@
   --shadow-sm: 0 2px 8px rgba(11, 31, 58, 0.08);
   --shadow-md: 0 8px 24px rgba(11, 31, 58, 0.12);
   --shadow-lg: 0 20px 48px rgba(11, 31, 58, 0.18);
+  /* Variante neutra (preto, não azul-marinho) para elementos que já
+     ficam sobre um fundo escuro — uma sombra colorida some quase toda
+     nesse contexto e lê como "brilho", em vez de profundidade real. */
+  --shadow-lg-on-dark: 0 20px 48px rgba(0, 0, 0, 0.4);
 
   /* Transições */
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
@@ -203,7 +207,8 @@ select:focus-visible {
 }
 
 .section {
-  padding-block: var(--space-2xl);
+  padding-top: var(--space-2xl);
+  padding-bottom: var(--space-2xl);
 }
 
 .section--alt {
@@ -274,7 +279,10 @@ select:focus-visible {
 
 .btn--whatsapp {
   background-color: var(--color-whatsapp);
-  color: var(--color-white);
+  /* Texto marinho, não branco: branco sobre o verde oficial do WhatsApp
+     fica em ~2:1 de contraste (abaixo do mínimo de 4.5:1 da WCAG AA);
+     a cor escura do texto resolve isso sem abandonar o verde da marca. */
+  color: var(--color-primary);
   box-shadow: var(--shadow-sm);
 }
 
@@ -308,13 +316,16 @@ select:focus-visible {
 }
 
 .btn--primary {
-  background-color: var(--color-accent);
+  /* Tom mais escuro que --color-accent: o azul de destaque puro com texto
+     branco fica em 3.9:1 (abaixo do mínimo de 4.5:1 da WCAG AA); este tom
+     é o mesmo já usado no hover original, só que como cor de repouso. */
+  background-color: #2367c4;
   color: var(--color-white);
   box-shadow: var(--shadow-sm);
 }
 
 .btn--primary:hover {
-  background-color: #2367c4;
+  background-color: #1c5aab;
   box-shadow: var(--shadow-md);
 }
 
@@ -682,7 +693,7 @@ select:focus-visible {
   position: relative;
   border-radius: var(--radius-lg);
   overflow: hidden;
-  box-shadow: var(--shadow-lg);
+  box-shadow: var(--shadow-lg-on-dark);
   border: 1px solid rgba(255, 255, 255, 0.15);
 }
 
@@ -882,7 +893,8 @@ select:focus-visible {
 .trustbar {
   background-color: var(--color-white);
   border-bottom: 1px solid var(--color-border);
-  padding-block: var(--space-lg);
+  padding-top: var(--space-lg);
+  padding-bottom: var(--space-lg);
 }
 
 .trustbar__grid {
@@ -1180,7 +1192,7 @@ select:focus-visible {
   max-height: 78vh;
   width: auto;
   border-radius: var(--radius-sm);
-  box-shadow: var(--shadow-lg);
+  box-shadow: var(--shadow-lg-on-dark);
   margin-inline: auto;
 }
 
@@ -1565,6 +1577,17 @@ select:focus-visible {
   gap: var(--space-sm);
 }
 
+/* Botões sobre fundo escuro (hero e esta faixa de CTA): sem sombra
+   azul-marinho própria — nesses dois fundos ela quase some e passa a ler
+   como "brilho" em vez de elevação. O contraste da própria cor do botão
+   contra o fundo escuro já basta para destacá-lo. */
+.hero .btn,
+.hero .btn:hover,
+.cta-band .btn,
+.cta-band .btn:hover {
+  box-shadow: none;
+}
+
 /* -------------------------------------------------------------------------
    13. FORMULÁRIO DE CONTATO / 14. LOCALIZAÇÃO
    ------------------------------------------------------------------------- */
@@ -1729,7 +1752,8 @@ select:focus-visible {
 .location__item {
   display: flex;
   gap: 0.8rem;
-  padding-block: var(--space-xs);
+  padding-top: var(--space-xs);
+  padding-bottom: var(--space-xs);
   border-bottom: 1px solid rgba(255, 255, 255, 0.12);
 }
 
@@ -1934,8 +1958,10 @@ select:focus-visible {
   height: 60px;
   border-radius: 50%;
   background-color: var(--color-whatsapp);
-  color: var(--color-white);
-  box-shadow: var(--shadow-lg);
+  color: var(--color-primary);
+  /* Botão fixo: fica visível sobre a hero escura desde o carregamento, então
+     usa a mesma sombra neutra (não a azul-marinho) do resto da hero. */
+  box-shadow: var(--shadow-lg-on-dark);
   transition: transform var(--transition-base), background-color var(--transition-fast);
   animation: pulse-whatsapp 2.6s ease-in-out infinite;
 }
@@ -1952,10 +1978,10 @@ select:focus-visible {
 
 @keyframes pulse-whatsapp {
   0%, 100% {
-    box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.45), var(--shadow-lg);
+    box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.45), var(--shadow-lg-on-dark);
   }
   50% {
-    box-shadow: 0 0 0 10px rgba(37, 211, 102, 0), var(--shadow-lg);
+    box-shadow: 0 0 0 10px rgba(37, 211, 102, 0), var(--shadow-lg-on-dark);
   }
 }
 
@@ -1968,7 +1994,8 @@ select:focus-visible {
   border-radius: 50%;
   background-color: var(--color-white);
   color: var(--color-primary);
-  border: 1px solid var(--color-border);
+  /* Só a sombra faz a elevação (sem borda também): igual ao botão do
+     WhatsApp ao lado, em vez de combinar contorno fino com sombra larga. */
   box-shadow: var(--shadow-md);
   opacity: 0;
   visibility: hidden;

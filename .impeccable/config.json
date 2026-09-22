@@ -11,6 +11,42 @@
         ],
         "createdAt": "2026-09-21T23:55:09.845Z",
         "reason": "Template <img class=js-lightbox-image src=\"\"> is the lightbox modal placeholder, populated by script.js on click — not a broken image"
+      },
+      {
+        "rule": "clipped-overflow-container",
+        "value": "html clips a positioned child",
+        "files": [
+          "index.html"
+        ],
+        "createdAt": "2026-09-22T00:23:54.678Z",
+        "reason": "Intentional: html{overflow-x:hidden} (style.css) only exists to hide the phantom horizontal scrollbar caused by the off-canvas mobile nav sitting at translateX(100%) — documented in a code comment next to the rule"
+      },
+      {
+        "rule": "clipped-overflow-container",
+        "value": "body clips a positioned child",
+        "files": [
+          "index.html"
+        ],
+        "createdAt": "2026-09-22T00:23:54.759Z",
+        "reason": "Same intentional off-canvas-nav overflow-x:hidden as the html rule, applied to body for the same reason (documented in style.css)"
+      },
+      {
+        "rule": "overused-font",
+        "value": "inter",
+        "files": [
+          "index.html"
+        ],
+        "createdAt": "2026-09-22T00:24:04.511Z",
+        "reason": "Documented brand typeface (see css/style.css section 1 comment: \"baseado no manual de marca da Tecceramic\") -- not a generic AI-default choice, changing it is a rebrand decision outside this task's scope"
+      },
+      {
+        "rule": "overused-font",
+        "value": "montserrat",
+        "files": [
+          "index.html"
+        ],
+        "createdAt": "2026-09-22T00:24:04.585Z",
+        "reason": "Documented brand typeface (see css/style.css section 1 comment: \"baseado no manual de marca da Tecceramic\") -- not a generic AI-default choice, changing it is a rebrand decision outside this task's scope"
       }
     ]
   }

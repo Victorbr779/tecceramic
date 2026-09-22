@@ -832,7 +832,10 @@
       <button class="lightbox__prev" aria-label="Imagem anterior">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
       </button>
-      <img class="js-lightbox-image" src="" alt="" />
+      <!-- src começa como um GIF transparente 1x1 (não vazio) só para não
+           renderizar o ícone de imagem quebrada antes do JS trocar pelo
+           src real no clique de uma miniatura do portfólio (ver script.js). -->
+      <img class="js-lightbox-image" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="" />
       <figcaption class="lightbox__caption js-lightbox-caption"></figcaption>
       <button class="lightbox__next" aria-label="Próxima imagem">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
