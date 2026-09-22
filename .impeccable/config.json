@@ -1,0 +1,17 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "broken-image",
+        "value": "<img src=\"\">",
+        "files": [
+          "index.html"
+        ],
+        "createdAt": "2026-09-21T23:55:09.845Z",
+        "reason": "Template <img class=js-lightbox-image src=\"\"> is the lightbox modal placeholder, populated by script.js on click — not a broken image"
+      }
+    ]
+  }
+}

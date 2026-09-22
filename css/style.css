@@ -73,8 +73,9 @@
   --shadow-lg: 0 20px 48px rgba(11, 31, 58, 0.18);
 
   /* Transições */
-  --transition-fast: 0.18s ease;
-  --transition-base: 0.28s ease;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-fast: 0.18s var(--ease-out);
+  --transition-base: 0.3s var(--ease-out);
 }
 
 /* -------------------------------------------------------------------------
@@ -267,6 +268,10 @@ select:focus-visible {
   transform: translateY(-2px);
 }
 
+.btn:active {
+  transform: translateY(0) scale(0.98);
+}
+
 .btn--whatsapp {
   background-color: var(--color-whatsapp);
   color: var(--color-white);
@@ -326,12 +331,51 @@ select:focus-visible {
 .reveal {
   opacity: 0;
   transform: translateY(24px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
+  transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out);
 }
 
 .reveal.is-visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+/* Escalonamento sutil para grupos de cards/itens que revelam juntos
+   (vários cruzam o threshold do IntersectionObserver no mesmo instante) —
+   teto de 6 passos para não parecer mecânico em listas longas. */
+.benefit-card.reveal:nth-child(2),
+.service-card.reveal:nth-child(2),
+.portfolio__item.reveal:nth-child(2),
+.process__item.reveal:nth-child(2),
+.testimonial-card.reveal:nth-child(2) {
+  transition-delay: 0.07s;
+}
+
+.benefit-card.reveal:nth-child(3),
+.service-card.reveal:nth-child(3),
+.portfolio__item.reveal:nth-child(3),
+.process__item.reveal:nth-child(3),
+.testimonial-card.reveal:nth-child(3) {
+  transition-delay: 0.14s;
+}
+
+.benefit-card.reveal:nth-child(4),
+.service-card.reveal:nth-child(4),
+.portfolio__item.reveal:nth-child(4),
+.process__item.reveal:nth-child(4) {
+  transition-delay: 0.21s;
+}
+
+.benefit-card.reveal:nth-child(5),
+.service-card.reveal:nth-child(5),
+.portfolio__item.reveal:nth-child(5),
+.process__item.reveal:nth-child(5) {
+  transition-delay: 0.28s;
+}
+
+.benefit-card.reveal:nth-child(n+6),
+.service-card.reveal:nth-child(n+6),
+.portfolio__item.reveal:nth-child(n+6) {
+  transition-delay: 0.35s;
 }
 
 .visually-hidden {
@@ -428,15 +472,17 @@ select:focus-visible {
   position: absolute;
   left: 0;
   bottom: -2px;
-  width: 0;
+  width: 100%;
   height: 2px;
   background-color: var(--color-accent);
-  transition: width var(--transition-base);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--transition-base);
 }
 
 .nav__link:hover::after,
 .nav__link:focus-visible::after {
-  width: 100%;
+  transform: scaleX(1);
 }
 
 .header-cta {
@@ -525,7 +571,14 @@ select:focus-visible {
   position: relative;
   background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
   color: var(--color-text-on-dark);
-  padding-block: var(--space-2xl);
+  /* Escala com a altura da viewport (svh) em vez de um valor fixo: em
+     telas baixas (celular), o padding encolhe para a hero inteira caber
+     antes do scroll; em telas altas, respeita o teto do espaçamento
+     original do design. */
+  padding-block: clamp(1.25rem, 4svh, var(--space-2xl));
+  min-height: calc(100svh - var(--header-height));
+  display: flex;
+  align-items: center;
   overflow: hidden;
 }
 
@@ -542,7 +595,7 @@ select:focus-visible {
   position: relative;
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--space-xl);
+  gap: clamp(0.85rem, 2.5svh, var(--space-xl));
   align-items: center;
 }
 
@@ -561,7 +614,7 @@ select:focus-visible {
   font-weight: 600;
   padding: 0.45rem 0.9rem;
   border-radius: 999px;
-  margin-bottom: var(--space-md);
+  margin-bottom: clamp(0.6rem, 2svh, var(--space-md));
 }
 
 .hero__badge svg {
@@ -573,7 +626,7 @@ select:focus-visible {
 .hero h1 {
   color: var(--color-white);
   font-size: clamp(2.1rem, 1.6rem + 2.4vw, 3.4rem);
-  margin-bottom: var(--space-sm);
+  margin-bottom: clamp(0.5rem, 1.5svh, var(--space-sm));
 }
 
 .hero h1 span {
@@ -583,7 +636,7 @@ select:focus-visible {
 .hero__subtitle {
   font-size: clamp(1rem, 0.95rem + 0.3vw, 1.2rem);
   color: var(--color-text-on-dark-muted);
-  margin-bottom: var(--space-lg);
+  margin-bottom: clamp(0.75rem, 2.5svh, var(--space-lg));
   max-width: 54ch;
 }
 
@@ -591,13 +644,19 @@ select:focus-visible {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-sm);
-  margin-bottom: var(--space-lg);
+  margin-bottom: clamp(0.75rem, 2.5svh, var(--space-lg));
 }
 
 .hero__meta {
-  display: flex;
+  display: none;
   flex-wrap: wrap;
   gap: var(--space-md);
+}
+
+@media (min-width: 640px) {
+  .hero__meta {
+    display: flex;
+  }
 }
 
 .hero__meta-item {
@@ -631,7 +690,10 @@ select:focus-visible {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  aspect-ratio: 4 / 5;
+  /* Proporção mais baixa (menos vertical) enquanto a imagem fica empilhada
+     sob o texto (abaixo de 960px): soma-se ao bloco de texto acima dela e
+     precisa caber inteira na tela antes do usuário rolar a página. */
+  aspect-ratio: 16 / 9;
 }
 
 .hero__media-caption {
@@ -663,8 +725,155 @@ select:focus-visible {
   }
 
   .hero__media-frame img {
-    aspect-ratio: 3 / 4;
+    aspect-ratio: 4 / 5;
   }
+}
+
+/* Notebooks com janela baixa (ex.: 1280×720, 1366×768): mesmo lado a lado,
+   a coluna da imagem em retrato (4/5) já é mais alta que a tela some com
+   o cabeçalho fixo. Aqui ela fica mais quadrada e o selo de confiança
+   secundário (já repetido na faixa de confiança logo abaixo) some, só
+   nessa faixa — em monitores mais altos nada disso muda. */
+@media (min-width: 960px) and (max-height: 820px) {
+  .hero {
+    padding-block: clamp(1rem, 3svh, 2rem);
+  }
+
+  .hero__meta {
+    display: none;
+  }
+
+  .hero__media-frame img {
+    aspect-ratio: 1 / 1;
+  }
+}
+
+/* Celulares (layout empilhado): o título grande + parágrafo + 2 botões +
+   imagem somados facilmente passam de uma tela inteira, então aqui a
+   hero recebe uma escala própria, mais compacta, para caber por completo
+   antes do usuário precisar rolar — medido e ajustado com o conteúdo
+   real (não só estimado), nos tamanhos de tela mais comuns. */
+@media (max-width: 639px) {
+  .hero {
+    padding-block: clamp(1rem, 3.5svh, 2rem);
+  }
+
+  .hero .container {
+    gap: clamp(0.75rem, 2svh, 1.25rem);
+  }
+
+  .hero__badge {
+    margin-bottom: clamp(0.4rem, 1.2svh, 0.8rem);
+  }
+
+  .hero h1 {
+    font-size: clamp(1.65rem, 1.2rem + 2.2vw, 2.3rem);
+    margin-bottom: 0.4rem;
+  }
+
+  .hero__subtitle {
+    margin-bottom: clamp(0.5rem, 1.5svh, 1rem);
+  }
+
+  .hero__actions {
+    margin-bottom: clamp(0.5rem, 1.5svh, 1rem);
+  }
+
+  .hero__actions .btn {
+    padding: 0.8rem 1.5rem;
+    font-size: 0.92rem;
+  }
+}
+
+/* Celulares também baixos (paisagem, ou aparelhos mais antigos/compactos):
+   um último aperto pontual além do tier acima. */
+@media (max-width: 639px) and (max-height: 700px) {
+  .hero {
+    padding-block: 0.5rem;
+  }
+
+  .hero .container {
+    gap: 0.5rem;
+  }
+
+  .hero__badge {
+    display: none;
+  }
+
+  .hero__subtitle {
+    margin-bottom: 0.4rem;
+  }
+
+  .hero__actions {
+    margin-bottom: 0.4rem;
+  }
+
+  .hero__actions .btn {
+    padding: 0.65rem 1.4rem;
+  }
+
+  .hero__media-frame img {
+    aspect-ratio: 2 / 1;
+  }
+}
+
+/* Momento de autoria: sequência de entrada da hero ao carregar a página.
+   Puramente em CSS (sem depender de JS) para nunca deixar o conteúdo
+   escondido caso um script falhe — e para não competir com o scroll
+   reveal, que serve às seções abaixo da dobra. */
+@keyframes hero-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes hero-media-in {
+  from {
+    opacity: 0;
+    transform: translateY(24px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.hero__badge,
+.hero h1,
+.hero__subtitle,
+.hero__actions,
+.hero__meta {
+  animation: hero-in 0.7s var(--ease-out) both;
+}
+
+.hero__badge {
+  animation-delay: 0.05s;
+}
+
+.hero h1 {
+  animation-delay: 0.15s;
+}
+
+.hero__subtitle {
+  animation-delay: 0.28s;
+}
+
+.hero__actions {
+  animation-delay: 0.4s;
+}
+
+.hero__meta {
+  animation-delay: 0.5s;
+}
+
+.hero__media {
+  animation: hero-media-in 0.9s var(--ease-out) both;
+  animation-delay: 0.25s;
 }
 
 /* -------------------------------------------------------------------------
