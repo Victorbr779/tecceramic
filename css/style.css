@@ -341,13 +341,14 @@ select:focus-visible {
 /* Animação de entrada ao rolar a página (respeitando reduced-motion) */
 .reveal {
   opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out);
+  transform: translateY(26px) scale(0.98);
+  transition: opacity 1s var(--ease-out), transform 1s var(--ease-out);
+  will-change: opacity, transform;
 }
 
 .reveal.is-visible {
   opacity: 1;
-  transform: translateY(0);
+  transform: translateY(0) scale(1);
 }
 
 /* Escalonamento sutil para grupos de cards/itens que revelam juntos
@@ -357,36 +358,41 @@ select:focus-visible {
 .service-card.reveal:nth-child(2),
 .portfolio__item.reveal:nth-child(2),
 .process__item.reveal:nth-child(2),
-.testimonial-card.reveal:nth-child(2) {
-  transition-delay: 0.07s;
+.testimonial-card.reveal:nth-child(2),
+.trustbar__item.reveal:nth-child(2) {
+  transition-delay: 0.09s;
 }
 
 .benefit-card.reveal:nth-child(3),
 .service-card.reveal:nth-child(3),
 .portfolio__item.reveal:nth-child(3),
 .process__item.reveal:nth-child(3),
-.testimonial-card.reveal:nth-child(3) {
-  transition-delay: 0.14s;
+.testimonial-card.reveal:nth-child(3),
+.trustbar__item.reveal:nth-child(3) {
+  transition-delay: 0.18s;
 }
 
 .benefit-card.reveal:nth-child(4),
 .service-card.reveal:nth-child(4),
 .portfolio__item.reveal:nth-child(4),
-.process__item.reveal:nth-child(4) {
-  transition-delay: 0.21s;
+.process__item.reveal:nth-child(4),
+.trustbar__item.reveal:nth-child(4) {
+  transition-delay: 0.27s;
 }
 
 .benefit-card.reveal:nth-child(5),
 .service-card.reveal:nth-child(5),
 .portfolio__item.reveal:nth-child(5),
-.process__item.reveal:nth-child(5) {
-  transition-delay: 0.28s;
+.process__item.reveal:nth-child(5),
+.trustbar__item.reveal:nth-child(5) {
+  transition-delay: 0.36s;
 }
 
 .benefit-card.reveal:nth-child(n+6),
 .service-card.reveal:nth-child(n+6),
-.portfolio__item.reveal:nth-child(n+6) {
-  transition-delay: 0.35s;
+.portfolio__item.reveal:nth-child(n+6),
+.trustbar__item.reveal:nth-child(n+6) {
+  transition-delay: 0.45s;
 }
 
 .visually-hidden {
@@ -708,6 +714,11 @@ select:focus-visible {
 }
 
 .hero__media-caption {
+  /* Em telas estreitas (mobile/tablet) a imagem fica mais baixa (16/9) e
+     essa legenda sobreposta acaba cobrindo boa parte dela — por isso só
+     aparece a partir do breakpoint em que a hero vira lado a lado
+     (ver @media min-width: 960px abaixo). */
+  display: none;
   position: absolute;
   left: var(--space-md);
   right: var(--space-md);
@@ -718,7 +729,6 @@ select:focus-visible {
   padding: var(--space-sm) var(--space-md);
   border-radius: var(--radius-sm);
   font-size: 0.85rem;
-  display: flex;
   align-items: center;
   gap: 0.6rem;
 }
@@ -737,6 +747,10 @@ select:focus-visible {
 
   .hero__media-frame img {
     aspect-ratio: 4 / 5;
+  }
+
+  .hero__media-caption {
+    display: flex;
   }
 }
 
@@ -859,32 +873,32 @@ select:focus-visible {
 .hero__subtitle,
 .hero__actions,
 .hero__meta {
-  animation: hero-in 0.7s var(--ease-out) both;
+  animation: hero-in 0.9s var(--ease-out) both;
 }
 
 .hero__badge {
-  animation-delay: 0.05s;
+  animation-delay: 0.07s;
 }
 
 .hero h1 {
-  animation-delay: 0.15s;
+  animation-delay: 0.2s;
 }
 
 .hero__subtitle {
-  animation-delay: 0.28s;
+  animation-delay: 0.36s;
 }
 
 .hero__actions {
-  animation-delay: 0.4s;
+  animation-delay: 0.52s;
 }
 
 .hero__meta {
-  animation-delay: 0.5s;
+  animation-delay: 0.65s;
 }
 
 .hero__media {
-  animation: hero-media-in 0.9s var(--ease-out) both;
-  animation-delay: 0.25s;
+  animation: hero-media-in 1.2s var(--ease-out) both;
+  animation-delay: 0.33s;
 }
 
 /* -------------------------------------------------------------------------
@@ -1398,6 +1412,41 @@ select:focus-visible {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+/* Luz azul que acompanha cada passo ao surgir na rolagem — pulso único,
+   sincronizado com o delay de entrada do próprio .process__item (ver
+   escalonamento de .reveal mais acima). */
+@keyframes process-glow {
+  0% {
+    box-shadow: 0 0 0 0 rgba(47, 128, 237, 0.6), 0 0 0 0 rgba(47, 128, 237, 0);
+  }
+  45% {
+    box-shadow: 0 0 0 6px rgba(47, 128, 237, 0.16), 0 0 26px 10px rgba(47, 128, 237, 0.55);
+  }
+  100% {
+    box-shadow: 0 0 0 14px rgba(47, 128, 237, 0), 0 0 0 0 rgba(47, 128, 237, 0);
+  }
+}
+
+.process__item.reveal.is-visible .process__number {
+  animation: process-glow 1.4s var(--ease-out) both;
+}
+
+.process__item.reveal.is-visible:nth-child(2) .process__number {
+  animation-delay: 0.09s;
+}
+
+.process__item.reveal.is-visible:nth-child(3) .process__number {
+  animation-delay: 0.18s;
+}
+
+.process__item.reveal.is-visible:nth-child(4) .process__number {
+  animation-delay: 0.27s;
+}
+
+.process__item.reveal.is-visible:nth-child(5) .process__number {
+  animation-delay: 0.36s;
 }
 
 .process__item h3 {

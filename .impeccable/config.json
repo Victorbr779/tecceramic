@@ -47,6 +47,15 @@
         ],
         "createdAt": "2026-09-22T00:24:04.585Z",
         "reason": "Documented brand typeface (see css/style.css section 1 comment: \"baseado no manual de marca da Tecceramic\") -- not a generic AI-default choice, changing it is a rebrand decision outside this task's scope"
+      },
+      {
+        "rule": "dark-glow",
+        "value": "*",
+        "files": [
+          "index.html"
+        ],
+        "createdAt": "2026-11-17T01:03:27.122Z",
+        "reason": "user confirmed: explicitly requested a blue light pulse accompanying the 01-05 process steps on reveal (process-glow keyframe in css/style.css)"
       }
     ]
   }
